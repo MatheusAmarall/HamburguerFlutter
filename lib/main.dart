@@ -8,7 +8,7 @@ main() {
       theme: ThemeData(
         useMaterial3: false
       ),
-      home: HomePage(),
+      home: LoginPage(),
       debugShowCheckedModeBanner: false,
     ),
   );

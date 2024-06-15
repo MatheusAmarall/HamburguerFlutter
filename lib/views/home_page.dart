@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../components/home_component.dart';
+import './feedback_page.dart';
+import './user_page.dart';
+import './requests_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,120 +13,10 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   List pages = [
-    Container(
-        color: Colors.purple,
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: BoxDecoration(color: Colors.white),
-                height: 150,
-                margin: EdgeInsets.all(20),
-              ),
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 100,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 100,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 100,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 100,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 130,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 130,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-              ],
-            ),
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 130,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-                Expanded(
-                  child: Container(
-                    decoration: BoxDecoration(color: Colors.white),
-                    height: 130,
-                    margin: EdgeInsets.all(20),
-                  ),
-                ),
-              ],
-            )
-          ],
-        )),
-    Container(
-        color: Colors.purple,
-        child: Column(
-          children: [
-            Container(
-              decoration: BoxDecoration(color: Colors.white),
-              width: double.infinity,
-              height: 200,
-              margin: EdgeInsets.all(20),
-            ),
-            Column(
-              children: [
-                Container(
-                  child: (Text("Titulo",
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                      ))),
-                ),
-                SizedBox(
-                  height: 40,
-                ),
-                Container(
-                  child: (Text("Lorem",
-                      style: TextStyle(
-                        fontSize: 36,
-                        fontWeight: FontWeight.bold,
-                      ))),
-                )
-              ],
-            ),
-          ],
-        )),
+    SingleChildScrollView(child: HomeComponent()),
+    RequestsPage(),
+    FeedbackPage(),
+    UserPage(),
   ];
 
   int selectedPage = 0;
@@ -130,6 +24,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
+          elevation: 20,
           backgroundColor: Colors.white,
           title: Text(
             "NeedFood",
@@ -163,19 +58,19 @@ class _HomePageState extends State<HomePage> {
           },
           items: [
             BottomNavigationBarItem(
-              icon: Icon(Icons.camera_alt),
+              icon: Icon(Icons.home),
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.chat),
+              icon: Icon(Icons.favorite),
               label: 'Favoritos',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.emoji_emotions),
+              icon: Icon(Icons.chat),
               label: 'Feedback',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.phone),
+              icon: Icon(Icons.person),
               label: 'Usuário',
             ),
           ],

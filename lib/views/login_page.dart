@@ -13,6 +13,23 @@ class LoginPage extends StatelessWidget {
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
+    authenticate() async {
+      var auth = await login(emailController.text, passwordController.text);
+      if (auth == true) {
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Usuário ou senha incorretos.'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+    }
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -36,11 +53,13 @@ class LoginPage extends StatelessWidget {
                 controller: emailController,
                 placeholder: 'Email',
                 type: false,
+                enabled: true
               ),
               MyInput(
                 controller: passwordController,
                 placeholder: 'Password',
                 type: true,
+                enabled: true
               ),
               SizedBox(height: 10),
               TextButton(
@@ -51,20 +70,8 @@ class LoginPage extends StatelessWidget {
               SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () async {
-                  var auth = await login(emailController.text, passwordController.text);
-                  if (auth == true) {
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(builder: (context) => HomePage()),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text('Usuário ou senha incorretos.'),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
+                  authenticate();
+                  
                 },
                 style: ElevatedButton.styleFrom(
                   minimumSize: Size(450, 50),

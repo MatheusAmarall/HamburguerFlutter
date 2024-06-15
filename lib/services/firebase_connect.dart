@@ -8,30 +8,61 @@ login(email, password) async{
   try {
     var auth = FirebaseAuth.instance;
     await auth.signInWithEmailAndPassword(email:email, password:password);
-    print('ok');
     return true;
   } catch (e) {
-    print('Error');
     return false;
   }
 }
  
-register(name, phone, email, password) async{
+register(name, phone, email, address, password) async{
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  var db = FirebaseFirestore.instance;
-  db.collection('Users').doc('1').set({
-    'name': name,
-    'email': email,
-    'phone_number': phone
-  });
- 
+
   try {
     var auth = FirebaseAuth.instance;
     await auth.createUserWithEmailAndPassword(email:email, password:password);
-    print('ok');
+
+    var db = FirebaseFirestore.instance;
+    db.collection('Users').doc(auth.currentUser!.uid).set({
+      'name': name,
+      'email': email,
+      'phone_number': phone,
+      'address': address
+    });
+
     return true;
   } catch (e) {
-    print('Error');
     return false;
   }
+}
+
+update(name, phone, address) async{
+  var auth = FirebaseAuth.instance;
+
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  db.collection('Users').doc(auth.currentUser!.uid).set({
+    'name': name,
+    'email': auth.currentUser!.email,
+    'phone_number': phone,
+    'address': address
+  });
+}
+
+send_feedback(message) async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  await db.collection('Feedback').doc('1').set({
+      'messages': FieldValue.arrayUnion([message]),
+  }, SetOptions(merge: true));
+}
+
+get_itens() async{
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  var db = FirebaseFirestore.instance;
+  var itens = await db.collection('Itens').get();
+  print(itens.docs);
+  itens.docs.forEach((item) => {
+    print(item.data())
+  });
+  return itens.docs;
 }

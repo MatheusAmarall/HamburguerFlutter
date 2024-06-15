@@ -32,37 +32,43 @@ class RegisterPage extends StatelessWidget {
           MyInput(
             controller: nameController,
             placeholder: 'Name',
-            type: false
+            type: false,
+            enabled: true
           ),
           MyInput(
             controller: emailController,
             placeholder: 'Email',
-            type: false
+            type: false,
+            enabled: true
           ),
           MyInput(
             controller: phoneController,
             placeholder: 'Phone',
-            type: false
+            type: false,
+            enabled: true
           ),
           MyInput(
             controller: addressController,
             placeholder: 'Address',
-            type: false
+            type: false,
+            enabled: true
           ),
           MyInput(
             controller: passwordController,
             placeholder: 'Password',
-            type: true
+            type: true,
+            enabled: true
           ),
           MyInput(
             controller: repeatPasswordController,
             placeholder: 'Repeat Password',
-            type: true
+            type: true,
+            enabled: true
           ),
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: (){
-              register(nameController.text, phoneController.text, emailController.text, passwordController.text);
+              register(nameController.text, phoneController.text, emailController.text, addressController.text, passwordController.text);
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
             }, 
             style: ElevatedButton.styleFrom(

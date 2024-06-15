@@ -5,8 +5,9 @@ class MyInput extends StatelessWidget {
   String placeholder;
   bool type;
   TextEditingController controller;
+  bool enabled;
 
-  MyInput({Key? key, required this.placeholder, required this.type, required this.controller}) : super(key: key);
+  MyInput({Key? key, required this.placeholder, required this.type, required this.controller, required this.enabled}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -18,6 +19,7 @@ class MyInput extends StatelessWidget {
         child: TextField(
           controller: controller,
           obscureText: type,
+          enabled: enabled,
           decoration: InputDecoration(
             border: OutlineInputBorder(),
             hintText: placeholder
