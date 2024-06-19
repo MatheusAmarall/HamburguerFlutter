@@ -68,7 +68,7 @@ class RegisterPage extends StatelessWidget {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: (){
-              register(nameController.text, phoneController.text, emailController.text, addressController.text, passwordController.text);
+              register_user(nameController.text, phoneController.text, emailController.text, addressController.text, passwordController.text);
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => LoginPage()));
             }, 
             style: ElevatedButton.styleFrom(

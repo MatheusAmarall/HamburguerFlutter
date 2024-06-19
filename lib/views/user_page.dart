@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:helloworld/services/firebase_connect.dart';
-import 'package:helloworld/views/login_page.dart';
 import '../components/my_input.dart';
 
 class UserPage extends StatefulWidget {
@@ -58,7 +57,7 @@ class _UserPageState extends State<UserPage> {
           SizedBox(height: 20),
           ElevatedButton(
             onPressed: (){
-              update(nameController.text, phoneController.text, addressController.text);
+              update_user(nameController.text, phoneController.text, addressController.text);
               limpa_campos();
             }, 
             style: ElevatedButton.styleFrom(

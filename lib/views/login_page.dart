@@ -1,7 +1,7 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:helloworld/services/firebase_connect.dart';
-import 'package:helloworld/views/home_page.dart';
+import 'package:helloworld/components/menu_drawer.dart';
 import 'package:helloworld/views/register_page.dart';
 import '../components/my_input.dart';
 
@@ -14,11 +14,11 @@ class LoginPage extends StatelessWidget {
     TextEditingController passwordController = TextEditingController();
 
     authenticate() async {
-      var auth = await login(emailController.text, passwordController.text);
+      var auth = await login_user(emailController.text, passwordController.text);
       if (auth == true) {
         Navigator.pushReplacement(
           context,
-          MaterialPageRoute(builder: (context) => HomePage()),
+          MaterialPageRoute(builder: (context) => MenuDrawer()),
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(
