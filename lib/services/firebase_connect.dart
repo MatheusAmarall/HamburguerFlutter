@@ -34,12 +34,24 @@ update_user(name, phone, address) async{
   var auth = FirebaseAuth.instance;
 
   var db = FirebaseFirestore.instance;
-  db.collection('Users').doc(auth.currentUser!.uid).set({
+  db.collection('Users').doc(auth.currentUser!.uid).update({
     'name': name,
-    'email': auth.currentUser!.email,
     'phone_number': phone,
     'address': address
   });
+}
+
+getUserInfo() async{
+  var auth = FirebaseAuth.instance;
+  var db = FirebaseFirestore.instance;
+
+  var userDoc = await db.collection('Users').doc(auth.currentUser!.uid).get();
+
+  return {
+    'name': userDoc.data()?['name'],
+    'phone_number': userDoc.data()?['phone_number'],
+    'address': userDoc.data()?['address']
+  };
 }
 
 send_feedback(message) async{
@@ -92,7 +104,7 @@ Future<String> addOrRemoveFavorite(Map<String, dynamic> product) async {
   try {
     var userDoc = await db.collection('Users').doc(auth.currentUser!.uid).get();
     List favorites = userDoc.data()?['favorites'] ?? [];
-
+    print(product);
     if (favorites.any((item) => item['nome'] == product['nome'])) {
       await db.collection('Users').doc(auth.currentUser!.uid).update({
         'favorites': FieldValue.arrayRemove([product])
@@ -174,9 +186,11 @@ Future<List<Map<String, dynamic>>> getFavorites() async {
     List<Map<String, dynamic>> products = favorites.map((item) {
       return {
         'nome': item['nome'] ?? '',
-        'imagem': item['imagem'] ?? '',
+        'imagem': item['imagem'],
         'localizacao': item['localizacao'] ?? '',
+        'descricao': item['descricao'] ?? '',
         'preco': item['preco']?.toString() ?? '0',
+        'categoria': item['categoria'] ?? '',
       };
     }).toList();
 
@@ -184,5 +198,40 @@ Future<List<Map<String, dynamic>>> getFavorites() async {
   } catch (e) {
     print('Erro ao obter itens do carrinho: $e');
     return [];
+  }
+}
+
+Future<void> clearCart() async {
+  var auth = FirebaseAuth.instance;
+  var db = FirebaseFirestore.instance;
+
+  try {
+    var userDoc = await db.collection('Users').doc(auth.currentUser!.uid).get();
+    List cart = userDoc.data()?['cart'] ?? [];
+
+    cart.forEach((product) async {
+      await db.collection('Users').doc(auth.currentUser!.uid).update({
+        'cart': FieldValue.arrayRemove([product])
+      });
+    });
+  }
+  catch (e) {
+    print('Erro ao limpar carrinho: $e');
+  }
+}
+
+Future<void> addToPurchased(List<Map<String, dynamic>> items) async {
+  var auth = FirebaseAuth.instance;
+  var db = FirebaseFirestore.instance;
+
+  try {
+    for (var item in items) {
+      await db.collection('Users').doc(auth.currentUser!.uid).update({
+        'purchased': FieldValue.arrayUnion([item])
+      });
+    }
+  }
+  catch (e) {
+    print('Erro ao realizar compra: $e');
   }
 }

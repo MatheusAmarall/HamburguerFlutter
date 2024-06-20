@@ -38,6 +38,9 @@ class FeedbackPage extends StatelessWidget {
             onPressed: (){
               send_feedback(messageController.text);
               limpa_campos();
+              ScaffoldMessenger.of(context).showSnackBar(
+                SnackBar(content: Text('Feedback enviado com sucesso!')),
+              );
             }, 
             style: ElevatedButton.styleFrom(
               minimumSize: Size(450, 50),

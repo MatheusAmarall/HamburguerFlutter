@@ -54,8 +54,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
           );
         },
         backgroundColor: Colors.white,
-        foregroundColor: Colors
-            .black, // Alterei para foregroundColor para o ícone ficar preto
+        foregroundColor: Colors.black,
         child: Icon(Icons.shopping_cart),
       ),
       bottomNavigationBar: BottomNavigationBar(

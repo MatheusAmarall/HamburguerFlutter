@@ -5,7 +5,21 @@ import 'package:helloworld/services/firebase_connect.dart';
 class RequestsPage extends StatelessWidget {
   RequestsPage({Key? key}) : super(key: key);
 
-  void buy() {}
+  void buy(BuildContext context, List<Map<String, dynamic>> products) async {
+    try {
+      await addToPurchased(products);
+      await clearCart();
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Compra realizada com sucesso!')),
+      );
+      Navigator.pop(context);
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Erro ao realizar a compra: $e')),
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +77,7 @@ class RequestsPage extends StatelessWidget {
                         ),
                         SizedBox(height: 10),
                         ElevatedButton(
-                          onPressed: buy,
+                          onPressed: () => buy(context, products),
                           style: ElevatedButton.styleFrom(
                             minimumSize: Size(double.infinity, 50),
                             shape: RoundedRectangleBorder(
