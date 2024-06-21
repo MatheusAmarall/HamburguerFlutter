@@ -22,6 +22,7 @@
 .vscode/
 
 # Flutter/Dart/Pub related
+lib/firebase_options.dart
 **/doc/api/
 .dart_tool/
 .flutter-plugins

@@ -69,6 +69,7 @@ Future<List<Map<String, dynamic>>> get_categorias() async {
     var data = doc.data();
 
     return {
+      'id': doc.id,
       'nome': data['nome'] ?? '',
       'imagem': data['imagem']
     };
@@ -234,4 +235,24 @@ Future<void> addToPurchased(List<Map<String, dynamic>> items) async {
   catch (e) {
     print('Erro ao realizar compra: $e');
   }
+}
+
+Future<List<Map<String, dynamic>>> getCategoryItems(category) async {
+  var db = FirebaseFirestore.instance;
+  var itens = await db.collection('Itens').where('categoria', isEqualTo: category['id']).get();
+
+  var retorno = await Future.wait(itens.docs.map((doc) async {
+    var data = doc.data();
+
+    return {
+        'nome': data['nome'] ?? '',
+        'imagem': data['imagem'],
+        'localizacao': data['localizacao'] ?? '',
+        'preco': data['preco']?.toString() ?? '0',
+        'descricao': data['descricao'] ?? '',
+        'categoria': data['categoria'] ?? ''
+      };
+  }).toList());
+
+  return retorno;
 }

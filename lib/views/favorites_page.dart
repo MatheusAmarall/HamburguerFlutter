@@ -6,8 +6,6 @@ import 'package:helloworld/views/product_detail_page.dart';
 class FavoritesPage extends StatelessWidget {
   FavoritesPage({Key? key}) : super(key: key);
 
-  void buy() {}
-
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<List<Map<String, dynamic>>>(

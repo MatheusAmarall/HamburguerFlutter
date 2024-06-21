@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:helloworld/components/box_product.dart';
 import 'package:helloworld/services/firebase_connect.dart';
 import 'package:helloworld/views/product_detail_page.dart';
+import 'package:helloworld/views/category_page.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -73,7 +74,13 @@ class HomePage extends StatelessWidget {
                       var categoria = categorias[index];
                       return GestureDetector(
                         onTap: () {
-                          // Ação ao clicar na categoria
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                CategoryPage(category: categoria),
+                            ),
+                          );
                         },
                         child: Container(
                           decoration: BoxDecoration(
